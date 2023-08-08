@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item from the spinner
                 rating = parent.getItemAtPosition(position).toString();
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do something when nothing is selected
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 // Insert a task
                 db.insertTask(title, genre, finalYear, rating);
 
-                Toast.makeText(MainActivity.this, "Song insert successful",
+                Toast.makeText(MainActivity.this, "Movie insert successful",
                         Toast.LENGTH_SHORT).show();
             }
         });

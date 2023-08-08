@@ -6,16 +6,15 @@
 
 
     <Button
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BACK" />
-
-    <Button
-        android:id="@+id/btnPG13"
+        android:id="@+id/btnFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SHOW ALL PG-13 MOVIES" />
+        android:text="SHOW ALL MOVIES BY FILTER RATING" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ListView
         android:id="@+id/lv"

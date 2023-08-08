@@ -74,11 +74,37 @@ public class DBHelper extends SQLiteOpenHelper  {
         // Close the database connection
         db.close();
     }
-    public ArrayList<Movie> getRating() {
-        ArrayList<Movie> movie = new ArrayList<Movie>();
+    public ArrayList<String> getRating() {
+        ArrayList<String> movies = new ArrayList<String>();
+        movies.add("NONE");
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID, COLUMN_TITLE, COLUMN_GENRE, COLUMN_YEAR, COLUMN_RATING};
-        Cursor cursor = db.query(TABLE_MOVIE, columns, null, null, null, null, null, null);
+        String[] columns= {COLUMN_RATING};
+        Cursor cursor = db.query(TABLE_MOVIE, columns, null, null,
+                COLUMN_RATING, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String rating=cursor.getString(0);
+
+                movies.add(rating);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return movies;
+    }
+
+    public ArrayList<Movie> getByRating(String filter) {
+        ArrayList<Movie> movie = new ArrayList<Movie>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns= {COLUMN_ID, COLUMN_TITLE,COLUMN_GENRE,COLUMN_YEAR,COLUMN_RATING };
+        String condition = COLUMN_RATING + "= ?";
+        String[] args = {filter};
+
+        Cursor cursor = db.query(TABLE_MOVIE, columns, condition, args,
+                null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -89,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper  {
                 String rating = cursor.getString(4);
                 Movie obj = new Movie(id, title, genre, year, rating);
                 movie.add(obj);
+
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -116,5 +143,30 @@ public class DBHelper extends SQLiteOpenHelper  {
         int result = db.delete(TABLE_MOVIE, condition, args);
         db.close();
         return result;
+    }
+
+    public ArrayList<Movie> getAllMovies() {
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columns= {COLUMN_ID, COLUMN_TITLE,COLUMN_GENRE,COLUMN_YEAR,COLUMN_RATING };
+        Cursor cursor = db.query(TABLE_MOVIE, columns, null, null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String title = cursor.getString(1);
+                String genre = cursor.getString(2);
+                int year = cursor.getInt(3);
+                String rating = cursor.getString(4);
+                Movie obj = new Movie(id, title, genre, year, rating);
+                movies.add(obj);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return movies ;
     }
 }

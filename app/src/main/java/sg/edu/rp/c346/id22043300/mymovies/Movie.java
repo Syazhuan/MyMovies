@@ -1,6 +1,8 @@
 package sg.edu.rp.c346.id22043300.mymovies;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
 
     private int id;
     private String title;
@@ -57,6 +59,13 @@ public class Movie {
         Rating = rating;
     }
 
-
+    public void updateDetails(String title, String genre, int year, String rating)
+    {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.year = year;
+        Rating = rating;
+    }
 
 }
